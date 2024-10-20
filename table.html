@@ -22,7 +22,7 @@
     <div class="container-fluid">
         <header class="bg-dark text-white text-center py-3">
             <h1>Tabel Data Idola Saya</h1>
-            <img src="Logo.png" alt="Logo Idola Saya" class="img-fluid">
+            <img src="logo.png" alt="Logo Idola Saya" class="img-fluid">
         </header>
         
         <div class="row">
@@ -45,4 +45,50 @@
                                 <th>Email</th>
                                 <th>Tanggal Lahir</th>
                                 <th>Pemain Favorit</th>
-                                <th
+                                <th>Posisi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dataTable"></tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+        
+        <footer class="bg-dark text-white text-center py-3 mt-auto">
+            <p>&copy; Toni Kroos Academy Copyright.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Mengambil data dari query string GET
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("name")) {
+            const name = urlParams.get("name");
+            const email = urlParams.get("email");
+            const dob = urlParams.get("dob");
+            const favoritePlayer = urlParams.get("favoritePlayer");
+            const position = urlParams.get("position");
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+            users.push({ name, email, dob, favoritePlayer, position });
+            localStorage.setItem("users", JSON.stringify(users));
+        }
+
+        // Menampilkan data pada tabel
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const dataTable = document.getElementById("dataTable");
+        users.forEach((user, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${user.name}</td>
+                <td>${user.email}</td>
+                <td>${user.dob}</td>
+                <td>${user.favoritePlayer}</td>
+                <td>${user.position}</td>
+            `;
+            dataTable.appendChild(row);
+        });
+    </script>
+</body>
+</html>
